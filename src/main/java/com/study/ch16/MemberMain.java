@@ -42,9 +42,10 @@ public class MemberMain {
                 name = scanner.nextLine();
                 System.out.print("주소 >> ");
                 address = scanner.nextLine();
-                System.out.println("<< 등록이 완료되었습니다. >>");
 
-                members.add(new Member(name, address));
+                Member member = new Member(name, address);
+                members.add(member);
+                System.out.println("<< 등록이 완료되었습니다. >>");
 
             } else if("2".equals(selectedMenu)) {
                 /*
@@ -69,8 +70,25 @@ public class MemberMain {
                  * Member 객체 toString();
                  * << 조회가 완료되었습니다 >>
                  */
+                String searchName = null;   //변수만들고 초기화
                 System.out.println("[ 회원 이름으로 조회하기 ]");
                 System.out.print("조회할 회원의 이름을 입력하세요 >> ");
+                searchName = scanner.nextLine();
+                
+                Member findMember = null;
+                for(Member member : members) {
+                    if(member.getName().equals(searchName)) {
+                        findMember = member;    //주소 변환
+                        break;
+                    }
+                }
+                if(findMember == null) {
+                    System.out.println("해당 이름의 회원이 존재하지 않습니다.");
+                    continue;
+                }
+                System.out.println(findMember);
+                System.out.println("<< 조회가 완료되었습니다 >>");
+//                System.out.println(findMember != null ? findMember : "해당 이름의 회원이 존재하지 않습니다.");
 
             } else if("5".equals(selectedMenu)) {
                 /*
@@ -79,9 +97,9 @@ public class MemberMain {
                  * << 조회가 완료되었습니다 >>
                  */
                 System.out.println("[ 회원 전체 조회하기 ]");
-
-                System.out.println(members.toString());
-
+                for(Member member : members) {
+                    System.out.println(member);
+                }
                 System.out.println("<< 조회가 완료되었습니다. >>");
 
             } else if("6".equals(selectedMenu)) {
@@ -91,6 +109,28 @@ public class MemberMain {
                  * 삭제된 Member 객체 toString();   삭제한 객체 리턴
                  * << 삭제가 완료되었습니다 >>
                  */
+
+                String searchName = null;   
+                System.out.println("[ 회원 이름으로 삭제하기 ]");
+                System.out.print("삭제할 회원의 이름을 입력하세요 >> ");
+                searchName = scanner.nextLine();
+
+                Member findMember = null;
+                for(Member member : members) {
+                    if(member.getName().equals(searchName)) {
+                        findMember = member;    //주소 변환
+                        break;
+                    }
+                }
+                if(findMember == null) {
+                    System.out.println("해당 이름의 회원이 존재하지 않습니다.");
+                    continue;
+                }
+                members.remove(findMember);     //객체 자체를 지우기
+//                members.remove(members.indexOf(findMember));    //인덱스 주소
+                System.out.println(findMember);
+                System.out.println("<< 삭제가 완료되었습니다 >>");
+
             } else {
                 System.out.println("다시 선택하세요");
             }
