@@ -6,10 +6,29 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MemberMain {
+    private static ArrayList<Member> members = new ArrayList<>();
+
+    public static String inputSearchName(String label) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println(label + ">> ");
+        return scanner.nextLine();
+    }
+    
+    public static Member findMemberByName(String name) {
+//    public static Member findMemberByName(ArrayList<Member> members, String name) {
+        //main 안에 members가 있어서 이 메소드에 주소를 매개변수로 넘겨줘야지 찾을수있음 ->
+        //main에 있던 ArrayList를 MemberMain클래스에 옮겨주면 매개변수로 할 필요가 없다
+        for(Member member : members) {
+            if(member.getName().equals(name)) {
+                return member;
+            }
+        }
+        return null;
+    }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ArrayList<Member> members = new ArrayList<>();
+//        ArrayList<Member> members = new ArrayList<>();
         String selectedMenu = null;
 
         while (true) {
@@ -55,6 +74,18 @@ public class MemberMain {
                  * 이름 >> 김준이
                  * << 수정이 완료되었습니다 >>
                  */
+                System.out.println("[ 회원 이름 수정하기 ]");
+                String searchName = inputSearchName("수정 할 회원의 이름을 입력하세요.");
+                Member findMember = findMemberByName(searchName);
+                if(findMember == null) {
+                    System.out.println("해당 이름의 회원이 존재하지 않습니다");
+                    continue;
+                }
+                System.out.print("이름 >> ");
+                String updateName = scanner.nextLine();
+                findMember.setName(updateName);
+                System.out.println("<< 수정이 완료되었습니다 >>");
+
             } else if("3".equals(selectedMenu)) {
                 /*
                  * [ 회원 주소 수정하기 ]
@@ -63,6 +94,18 @@ public class MemberMain {
                  * 주소 >> 부산 동래구 사직동
                  * << 수정이 완료되었습니다 >>
                  */
+                System.out.println("[ 회원 주소 수정하기 ]");
+                String searchName = inputSearchName("수정 할 회원의 이름을 입력하세요.");
+                Member findMember = findMemberByName(searchName);
+                if(findMember == null) {
+                    System.out.println("해당 이름의 회원이 존재하지 않습니다");
+                    continue;
+                }
+                System.out.print("주소 >> ");
+                String updateAddress = scanner.nextLine();
+                findMember.setAddress(updateAddress);
+                System.out.println("<< 수정이 완료되었습니다 >>");
+
             } else if("4".equals(selectedMenu)) {
                 /*
                  * [ 회원 이름으로 조회하기 ]
@@ -72,16 +115,11 @@ public class MemberMain {
                  */
                 String searchName = null;   //변수만들고 초기화
                 System.out.println("[ 회원 이름으로 조회하기 ]");
-                System.out.print("조회할 회원의 이름을 입력하세요 >> ");
-                searchName = scanner.nextLine();
+//                System.out.print("조회할 회원의 이름을 입력하세요 >> ");
+//                searchName = scanner.nextLine();
+                searchName  = inputSearchName("조회할 회원의 이름을 입력하세요 >> ");
                 
-                Member findMember = null;
-                for(Member member : members) {
-                    if(member.getName().equals(searchName)) {
-                        findMember = member;    //주소 변환
-                        break;
-                    }
-                }
+                Member findMember = findMemberByName(searchName);
                 if(findMember == null) {
                     System.out.println("해당 이름의 회원이 존재하지 않습니다.");
                     continue;
