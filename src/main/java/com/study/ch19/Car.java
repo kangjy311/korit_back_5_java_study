@@ -17,7 +17,6 @@ public class Car {
     }
     public static CarBuilder builder() {    //bouilder 객체 생성
         return new CarBuilder();
-
     }
     //내부 클래스
     public static class CarBuilder {
@@ -37,5 +36,6 @@ public class Car {
             return  this;
         }
     }
+    //스태틱 끼리는 생성없이 호출할수있다.
 
 }
